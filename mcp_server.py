@@ -1,3 +1,5 @@
+from dataclasses import Field
+
 from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("DocumentMCP", log_level="ERROR")
@@ -12,9 +14,9 @@ docs = {
     "spec.txt": "These specifications define the technical requirements for the equipment.",
 }
 
-# TODO: Write a tool to read a doc
+# Write a tool to read a doc
 @mcp.tool(
-    name="read_doc_contents"
+    name="read_doc_contents",
     description="Read the contents of a document given its name."
 )
 def read_document(
@@ -25,7 +27,7 @@ def read_document(
     return docs[doc_id]
 
 
-# TODO: Write a tool to  edit a doc
+#Write a tool to  edit a doc
 @mcp.tool(
     name="edit_doc_contents",
     description="Edit the contents of a document given its name and new content."
