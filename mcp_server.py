@@ -1,9 +1,8 @@
-from dataclasses import Field
-
+from typing import Annotated
+from pydantic import Field
 from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("DocumentMCP", log_level="ERROR")
-
 
 docs = {
     "deposition.md": "This deposition covers the testimony of Angela Smith, P.E.",
@@ -14,38 +13,30 @@ docs = {
     "spec.txt": "These specifications define the technical requirements for the equipment.",
 }
 
-# Write a tool to read a doc
 @mcp.tool(
     name="read_doc_contents",
     description="Read the contents of a document given its name."
 )
 def read_document(
-    doc_id: str = Field(description="The id of the document to read.")
+    doc_id: Annotated[str, Field(description="The id of the document to read.")]
 ):
     if doc_id not in docs:
         raise ValueError(f"Document with id '{doc_id}' not found.")
     return docs[doc_id]
 
 
-#Write a tool to  edit a doc
 @mcp.tool(
     name="edit_doc_contents",
     description="Edit the contents of a document given its name and new content."
 )
 def edit_document(
-    doc_id: str = Field(description="The id of the document to edit."),
-    new_content: str = Field(description="The new content for the document.")
+    doc_id: Annotated[str, Field(description="The id of the document to edit.")],
+    new_content: Annotated[str, Field(description="The new content for the document.")]
 ):
     if doc_id not in docs:
         raise ValueError(f"Document with id '{doc_id}' not found.")
     docs[doc_id] = new_content
     return f"Document '{doc_id}' updated successfully."
-
-
-# TODO: Write a resource to return all doc id's
-# TODO: Write a resource to return the contents of a particular doc
-# TODO: Write a prompt to rewrite a doc in markdown format
-# TODO: Write a prompt to summarize a doc
 
 
 if __name__ == "__main__":
