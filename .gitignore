@@ -1,1 +1,3 @@
 /.envapp.egg-info/
+app.egg-info/
+.env
