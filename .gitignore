@@ -1,3 +1,5 @@
 /.envapp.egg-info/
 app.egg-info/
 .env
+*.pyc
+__pycache__/
